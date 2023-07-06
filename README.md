@@ -1,6 +1,7 @@
 # **Pendulum**
 
 ## **Actor-Critic 알고리즘, A2C**
+![](https://greentec.github.io/images/rl4_0.png) <br>
 * Actor 네트워크와 Critic 네트워크라는 두 개의 네트워크를 사용한다.
     * **Actor(정책망)**: 각 행동에 대한 확률 분포 **$\pi(a|s)$** 를 반환. 정책망이 어떤 행동을 취해야할지 알려준다.
     * **Critic(가치망)**: 상태의 가치 **$V(s)$** 를 반환, 에이전트의 행동이 예상보다 얼마나 좋을지를 평가한다.
