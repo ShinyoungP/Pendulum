@@ -51,7 +51,7 @@ class ContinuousA2C:
         self.state_size = state_size
         self.max_action = max_action
 
-        self.std_bound = [1e-2, 1.0]
+        self.std_bound = [0.01, 1.0]
         self.discount_factor = 0.95
         self.actor_learning_rate = 0.0001
         self.critic_learning_rate = 0.001
@@ -145,7 +145,7 @@ with tf.GradientTape() as tape1:
             adv = tf.stop_gradient(target - self.critic(state, training=True))
             dist = tfd.Normal(loc=mu, scale=sigma) 
             action_prob = dist.prob([action])[0] #pi(a|s)
-            cross_entropy = - tf.math.log(action_prob + 1e-5)
+            cross_entropy = - tf.math.log(action_prob + 0.00001)
             actor_loss = tf.reduce_mean(cross_entropy * adv)
 
 actor_grads = tape1.gradient(actor_loss, actor_params)
@@ -154,7 +154,7 @@ self.actor_optimizer.apply_gradients(zip(actor_grads, actor_params))
 1. $adv=Q(s,a)-V(s)$ 
 2. $action(prob)=\pi(a|s)$
 3. $cross(entropy)=-\log\pi(a|s)$ <br>
-log 안의 값이 0이 되지 않도록 작은 값인 1e-5를 더해준다.
+log 안의 값이 0이 되지 않도록 작은 값인 0.00001을 더해준다.
 4. $actor(loss)=- \frac{1}{n} \displaystyle\sum_{i=0}^{n}[(Q(s,a)-V(s))\log\pi(a|s)]$
 5. $actor(grads)$ : actor_loss를 actor_params로 미분한 값 <br>
 이는 actor 네트워크의 파라미터를 얼마나 조정해야 손실 함수를 최소화할 수 있는지를 알기 위함이다.
