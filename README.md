@@ -194,7 +194,7 @@ def load_weights(self, path):
         self.actor.load_weights(path + 'pendulum_actor.h5')
         self.critic.load_weights(path + 'pendulum_critic.h5')
 
-    def save_weights(self, path):
+def save_weights(self, path):
         self.actor.save_weights(path + 'pendulum_actor.h5')
         self.critic.save_weights(path + 'pendulum_critic.h5')
 ```
